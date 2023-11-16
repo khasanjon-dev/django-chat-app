@@ -1,8 +1,9 @@
+import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-b2prt-mfq1g^4+dux(m!(&-1^v15m!6lp84xq!m-9yk^=0(g0i'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
