@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.crypto import get_random_string
 from django.views import View
 
-from chats.models import Room
+from chats.models import Room, Message
 
 
 class GetAllUsers(LoginRequiredMixin, View):
@@ -55,3 +55,28 @@ class GetAllUsers(LoginRequiredMixin, View):
             create_room.save()
             room_name = create_room.room_name
         return redirect('room', room_name=room_name)
+
+
+class ChatRoom(LoginRequiredMixin, View):
+    queryset = Room.objects.all()
+
+    def get(self, request, room_name, *args, **kwargs):
+        room = get_object_or_404(Room, room_name=self.kwargs.get('room_name'))
+        sender = request.user.id
+        sender_name = User.objects.get(id=sender).username
+
+        if room.receiver_user.id == sender_name:
+            receiver = room.sender_user.id
+        else:
+            receiver = room.receiver_user.id
+        message = Message.objects.filter(
+            Q(sender_user=sender, receiver_user=receiver) | Q(sender_user=receiver, receiver_user=sender)).order_by(
+            'timestamp')
+        context = {
+            'room_name': room_name,
+            'sender_id': sender,
+            'receiver_id': receiver,
+            'message': message,
+            'sender_name': sender_name
+        }
+        return render(request, 'chats/room.html', context)
