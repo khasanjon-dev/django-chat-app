@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     # third party apps
     'channels',
     # my apps
-    # 'chats',
+    'chats',
 ]
 
 MIDDLEWARE = [
