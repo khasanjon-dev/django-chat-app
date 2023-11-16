@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # my apps
     'chats',
+    # third party apps
+    'daphne',
 ]
 
 MIDDLEWARE = [
