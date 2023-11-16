@@ -1,5 +1,5 @@
 from django.urls import path
 
 urlpatterns = [
-    path('', chat_views)
+    # path('', chat_views)
 ]
