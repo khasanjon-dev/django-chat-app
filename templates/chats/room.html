@@ -1,0 +1,21 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <br>
+    <div id="chat-log"
+         style="background-color: whitesmoke; color: #1B2430;width: 100%;height: 500px;margin-left: 1%;padding: 1%;overflow-y: scroll">
+        {% for message in messages %}
+            {% if message.sender_user == user %}
+                <div style="float: right">
+                    {{ message.sender_user }} | {{ message.message }}
+                </div>
+            {% else %}
+                <div style="float: left">
+                    {{ message.sender_user }} : {{ message.message }}
+                </div>
+            {% endif %}
+            <br>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
