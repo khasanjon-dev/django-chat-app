@@ -7,7 +7,7 @@ def index_view(request):
     detail = {
         'rooms': Room.objects.all()
     }
-    return render(request, 'index.html', detail)
+    return render(request, 'chats/index.html', detail)
 
 
 def room_view(request, room_name):
