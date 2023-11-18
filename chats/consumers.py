@@ -2,16 +2,26 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from django.contrib.auth.models import User
 
-from chats.models import Message
+from chats.models import Room
 
 
 class ChatConsumer(WebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
+        self.room_name = None
+        self.room_group_name = None
+        self.room = None
+
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
+        self.room_group_name = f'chat_{self.room_name}'
+        self.room = Room.objects.get(name=self.room_name)
 
+        # connection has to be accepted
+        self.accept()
+
+        # join the room group
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
@@ -23,47 +33,18 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    def save_message(self, message, sender, receiver):
-        sender_user = User.objects.get(id=sender)
-        receiver_user = User.objects.get(id=receiver)
-        data = {
-            'message': message,
-            'sender_user': sender_user,
-            'receiver_user': receiver_user
-        }
-        new_message = Message.objects.create(**data)
-        new_message.save()
-
-    def receive(self, text_data):
+    def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        sender = text_data_json['sender']
-        receiver = text_data_json['receiver']
-        sender_name = text_data_json['sender_name']
-        self.save_message(message, sender, receiver)
 
+        # send chat message event to the room
         async_to_sync(self.channel_layer.group_send)(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message,
-                'sender': sender,
-                'receiver': receiver,
-                'sender_name': sender_name
+                'message': message
             }
         )
 
     def chat_message(self, event):
-        message = event['message']
-        sender = event['sender']
-        receiver = event['receiver']
-        sender_name = event['sender_name']
-
-        self.send(text_data=json.dumps(
-            {
-                'message': message,
-                'sender': sender,
-                'receiver': receiver,
-                'sender_name': sender_name
-            }
-        ))
+        self.send(text_data=json.dumps(event))
