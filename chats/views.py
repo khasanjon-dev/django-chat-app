@@ -12,4 +12,9 @@ def index_view(request):
 
 def room_view(request, room_name):
     chat_room, created = Room.objects.get_or_create(name=room_name)
-    return render(request, '')
+    detail = {
+        'room': chat_room
+    }
+    return render(request, 'room.html', detail)
+
+
