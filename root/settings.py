@@ -53,7 +53,7 @@ TEMPLATES = [
         },
     },
 ]
-
+WSGI_APPLICATION = 'root.wsgi.application'
 ASGI_APPLICATION = 'root.asgi.application'
 
 DATABASES = {
