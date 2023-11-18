@@ -3,3 +3,11 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'chats/index.html')
+
+
+def room(request, room_name):
+    detail = {
+        'room_name': room_name
+    }
+    return render(request, 'chats/room.html', detail)
+
