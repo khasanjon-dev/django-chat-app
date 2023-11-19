@@ -9,3 +9,5 @@ clean:
 	isort .
 add:
 	poetry export --without-hashes --format=requirements.txt > requirements.txt
+run:
+	python3 manage.py runserver
