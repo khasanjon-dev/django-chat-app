@@ -60,3 +60,20 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name,
             data
         )
+
+    # receive message from room group
+    def chat_message(self, event):
+        message = event['message']
+        sender = event['sender']
+        receiver = event['receiver']
+        sender_username = event['sender_name']
+
+        # send message to WebSocket
+        data = {
+            'message': message,
+            'sender': sender,
+            'receiver': receiver,
+            'sender_name': sender_username
+        }
+        detail = json.dumps(data)
+        self.send(text_data=detail)
