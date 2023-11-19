@@ -1,0 +1,42 @@
+{% extends 'usres/base.html' %}
+{% block content %}
+    <br>
+    <div id="chat-log"
+         style="background-color: whitesmoke;
+         color: #1B2430;
+         width: 100%;
+         height: 500px;
+         margin-left: 1%;
+         padding: 1%;
+         overflow-y: scroll;">
+        {% for message in messages %}
+            {% if message.sender == user %}
+                <div style="float:right;">
+                    {{ message.sender }} : {{ message.message }}
+                </div>
+            {% else %}
+                <div style="float:left;">
+                    {{ message.sender }} : {{ message.message }}
+                </div>
+            {% endif %}
+            <br>
+        {% endfor %}
+    </div>
+
+    <div style="margin-left: 1%; padding-top: 1%">
+        <input id="chat-message-input" type="text" size="60" style="width: 85%">&nbsp;
+        <input id="chat-message-submit" type="button" value="Send"
+               style="width: 13%; color: white; background-color: #1B2430">
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+    </script>
+    {{ name | json_script: "room-name" }}
+
+    <script>
+        var sender = '{{ sender_id }}';
+        var receiver = '{{ receiver_id }}';
+        var sender_name = '{{ sender_name }}';
+        var user =
+    </script>
+{% endblock %}
