@@ -1,31 +1,20 @@
-from django.contrib.auth.models import User
-from django.db.models import Model, CharField, ManyToManyField, ForeignKey, CASCADE, TextField, DateTimeField
-
-
-class Room(Model):
-    name = CharField(max_length=250)
-    online = ManyToManyField(User, blank=True)
-
-    def get_online_count(self):
-        return self.online.count()
-
-    def join(self, user):
-        self.online.add(user)
-        self.save()
-
-    def leave(self, user):
-        self.online.remove(user)
-        self.save()
-
-    def __str__(self):
-        return f'{self.name} ({self.get_online_count()})'
+from django.contrib.auth.models import User, AnonymousUser
+from django.db.models import Model, ForeignKey, SET, TextField, DateTimeField, CharField
 
 
 class Message(Model):
-    user = ForeignKey(User, CASCADE)
-    room = ForeignKey(Room, CASCADE)
-    content = TextField()
+    message = TextField()
     timestamp = DateTimeField(auto_now_add=True)
+    # relationships
+    sender = ForeignKey(User, SET(AnonymousUser.id), 'sender')
+    receiver = ForeignKey(User, SET(AnonymousUser.id), 'receiver')
+
+
+class Room(Model):
+    name = CharField(max_length=250, unique=True)
+    # relationships
+    sender = ForeignKey(User, SET(AnonymousUser.id), 'sender')
+    receiver = ForeignKey(User, SET(AnonymousUser.id), 'receiver')
 
     def __str__(self):
-        return f'{self.user.username}: {self.content} [{self.timestamp}]'
+        return self.name
