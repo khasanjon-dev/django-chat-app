@@ -9,7 +9,7 @@ class User(AbstractUser):
     email = EmailField(unique=True)
     updated_at = DateTimeField(auto_now=True, null=True)
     # file
-    image = ImageField(upload_to='users/images')
+    image = ImageField(upload_to='users/images', default='users/images/default.img')
 
     def __str__(self):
         return self.email + ' ' + self.username
