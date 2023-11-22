@@ -1,8 +1,14 @@
 from django.shortcuts import render
 
+from users.models import User
+
 
 def index(request):
-    return render(request, 'index.html')
+    users = User.objects.all()
+    detail = {
+        'users': users
+    }
+    return render(request, 'index.html', detail)
 
 
 def chat(request):
