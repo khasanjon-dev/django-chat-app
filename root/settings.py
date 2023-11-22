@@ -23,8 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-    'chats',
     'users',
+    'chats',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +56,9 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = 'root.asgi.application'
+
+AUTH_USER_MODEL = 'users.User'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATABASES = {
     'default': {
@@ -92,8 +95,6 @@ MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CHANNEL_LAYERS = {
     'default': {
