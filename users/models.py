@@ -10,6 +10,5 @@ class User(AbstractUser):
 
     updated_at = DateTimeField(auto_now=True, null=True)
 
-    class Meta:
-        def __str__(self):
-            return self.email + ' ' + self.username
+    def __str__(self):
+        return self.email + ' ' + self.username
