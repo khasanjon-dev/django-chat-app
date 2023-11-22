@@ -8,10 +8,9 @@ from django.core.asgi import get_asgi_application
 from chats import routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'root.settings')
-django_asgi_app = get_asgi_application()
 application = ProtocolTypeRouter(
     {
-        'http': django_asgi_app,
+        'http': get_asgi_application(),
         'websocket': AllowedHostsOriginValidator(
             AuthMiddlewareStack(
                 URLRouter(
