@@ -12,7 +12,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-@login_required
+@login_required(login_url='login')
 def chat(request):
     users = User.objects.all()
     context = {
