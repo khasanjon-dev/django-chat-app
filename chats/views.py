@@ -4,6 +4,7 @@ from django.shortcuts import render
 from users.models import User
 
 
+@login_required(login_url='login')
 def index(request):
     users = User.objects.order_by('-date_joined')
     context = {

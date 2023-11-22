@@ -90,11 +90,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 
 CHANNEL_LAYERS = {
     'default': {
