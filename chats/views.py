@@ -5,7 +5,7 @@ from users.models import User
 
 
 @login_required(login_url='login')
-def index(request):
+def index_view(request):
     users = User.objects.order_by('-date_joined')
     context = {
         'users': users
@@ -14,7 +14,7 @@ def index(request):
 
 
 @login_required(login_url='login')
-def chat(request):
+def chat_view(request):
     users = User.objects.all()
     context = {
         'users': users
