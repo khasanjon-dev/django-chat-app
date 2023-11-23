@@ -27,10 +27,11 @@ def login_view(request):
 def register_view(request):
     context = {}
     if request.method == 'POST':
+        print(request.POST)
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login_view')
-        else:
-            context['errors'] = form.errors
+            return redirect('login')
+        context['errors'] = form.errors
+
     return render(request, 'users/register.html', context)

@@ -10,7 +10,7 @@ class User(AbstractUser):
     date_joined = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True, null=True)
     # file
-    image = ImageField(upload_to='users/images', default='users/images/default.img')
+    image = ImageField(upload_to='users/images', default='users/images/default.jpg')
 
     def __str__(self):
         return self.email + ' ' + self.username

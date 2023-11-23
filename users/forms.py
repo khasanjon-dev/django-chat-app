@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
-from django.forms import Form, ModelForm, CharField
+from django.forms import Form, ModelForm
 from django.shortcuts import get_object_or_404
 
 from users.models import User
@@ -18,7 +18,7 @@ class LoginForm(Form):
 
 
 class RegisterForm(ModelForm):
-    confirm_password = CharField()
+    # confirm_password = CharField(widget=PasswordInput())
 
     class Meta:
         model = User
@@ -27,36 +27,21 @@ class RegisterForm(ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if email and User.objects.filter(email=email).exists():
-            self._update_errors(
-                ValidationError(
-                    {
-                        'email': self.instance.unique_error_message(
-                            self._meta.model, ['email']
-                        )
-                    }
-                )
-            )
+            message = 'Email already used'
+            raise ValidationError(message)
         return email
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if username and User.objects.filter(username=username).exists():
-            self._update_errors(
-                ValidationError(
-                    {
-                        'username': self.instance.unique_error_message(
-                            self._meta.model, ['username']
-                        )
-                    }
-                )
-            )
+            message = 'Username already used'
+            raise ValidationError(message)
         return username
 
     def clean_password(self):
         password = self.cleaned_data.get('password')
-        confirm_password = self.cleaned_data.get('confirm_password')
+        confirm_password = self.data.get('confirm_password')
         if password != confirm_password:
             message = 'Password do not match'
             raise ValidationError(message)
         return make_password(password)
-PasswordInput

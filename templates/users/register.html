@@ -11,13 +11,10 @@
                 {% if errors %}
 
                     <div class="alert alert-danger">
-
-                        {% for error in errors %}
+                        {% for field, error in errors.items %}
                             {{ error }}
                         {% endfor %}
-
                     </div>
-
                 {% endif %}
 
                 <div class="col-auto">
@@ -42,7 +39,8 @@
                         <input class="form-control" type="password" placeholder="Password" name="password"/>
                     </div>
                     <div class="mb-3 col-sm-6">
-                        <input class="form-control" type="password" placeholder="Confirm Password" name="confirm_password"/>
+                        <input class="form-control" type="password" placeholder="Confirm Password"
+                               name="confirm_password"/>
                     </div>
                 </div>
                 <div class="form-check">
@@ -51,7 +49,7 @@
                             href="#!">privacy policy</a></label>
                 </div>
                 <div class="mb-3">
-                    <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Register</button>
+                    <button class="btn btn-primary d-block w-100 mt-3" type="submit">Register</button>
                 </div>
             </form>
             <div class="position-relative mt-4">
