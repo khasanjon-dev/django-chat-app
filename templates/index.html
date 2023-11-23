@@ -50,8 +50,9 @@
                         <th class="sort pe-1 align-middle white-space-nowrap" data-sort="email">Email</th>
                         <th class="sort pe-1 align-middle white-space-nowrap" data-sort="phone">Username</th>
                         <th class="sort pe-1 align-middle white-space-nowrap ps-5" data-sort="address"
-                            style="min-width: 200px;">Joined</th>
-{#                        <th class="sort pe-1 align-middle white-space-nowrap" data-sort="joined">Joined</th>#}
+                            style="min-width: 200px;">Joined
+                        </th>
+                        {#                        <th class="sort pe-1 align-middle white-space-nowrap" data-sort="joined">Joined</th>#}
                         <th class="align-middle no-sort"></th>
                     </tr>
                     </thead>
@@ -66,7 +67,7 @@
                                 </div>
                             </td>
                             <td class="name align-middle white-space-nowrap py-4"><a
-                                    href="">
+                                    href="{% url 'chat' user.id %}">
                                 <div class="d-flex d-flex align-items-center">
                                     <div class="avatar avatar-xl me-2">
                                         <img class="rounded-circle" src="{% get_media_prefix %}{{ user.image }}" alt="">
@@ -76,16 +77,16 @@
                                     </div>
                                 </div>
                             </a></td>
-                            <td class="email align-middle py-2"><a href="mailto:ricky@example.com">{{ user.email }}</a>
+                            <td class="email align-middle py-2"><a href="">{{ user.email }}</a>
                             </td>
-                            <td class="phone align-middle white-space-nowrap py-2"><a href="tel:2012001851">
+                            <td class="phone align-middle white-space-nowrap py-2"><a href="">
                                 {{ user.username }}
                             </a></td>
                             <td class="address align-middle white-space-nowrap ps-5 py-2">
                                 {{ user.date_joined|date:"G:i/j/m/Y" }}
                             </td>
 
-{#                            <td class="joined align-middle py-2">{{ user.date_joined|date:"j l F Y" }}</td>#}
+                            {#                            <td class="joined align-middle py-2">{{ user.date_joined|date:"j l F Y" }}</td>#}
                             <td class="align-middle white-space-nowrap py-2 text-end">
                                 <div class="dropdown font-sans-serif position-static">
                                     <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal"

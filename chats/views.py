@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -14,9 +16,13 @@ def index_view(request):
 
 
 @login_required(login_url='login')
-def chat_view(request):
+def chat_view(request, pk):
+    date = datetime.now()
+    user = User.objects.get(id=pk)
     users = User.objects.all()
     context = {
-        'users': users
+        'users': users,
+        'user': user,
+        'date': date
     }
     return render(request, 'chats/chat.html', context)
