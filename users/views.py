@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
@@ -7,6 +6,7 @@ from users.forms import LoginForm, RegisterForm
 
 
 def login_view(request):
+    context = {}
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -15,19 +15,15 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user:
                 login(request, user)
-            else:
-                message = 'email or password wrong'
-                messages.add_message(request, messages.ERROR, message)
-                return render(request, 'users/login.html')
-            return redirect('index')
-    return render(request, 'users/login.html')
+                return redirect('index')
+            context['error'] = 'username or password do not match!'
+    return render(request, 'users/login.html', context)
 
 
 @anonymous_required('/')
 def register_view(request):
     context = {}
     if request.method == 'POST':
-        print(request.POST)
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()

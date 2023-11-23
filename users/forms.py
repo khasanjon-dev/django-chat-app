@@ -1,25 +1,18 @@
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.forms import Form, ModelForm
-from django.shortcuts import get_object_or_404
 
 from users.models import User
 
 
 class LoginForm(Form):
     def clean_password(self):
-        username = self.data.get('username')
         password = self.data.get('password')
-        user = get_object_or_404(User, username=username)
-        if user.check_password(password):
-            context = 'Password or Username do not match'
-            raise ValidationError(context)
+        password = make_password(password)
         return password
 
 
 class RegisterForm(ModelForm):
-    # confirm_password = CharField(widget=PasswordInput())
-
     class Meta:
         model = User
         fields = ('first_name', 'email', 'username', 'password')
