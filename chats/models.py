@@ -1,4 +1,5 @@
-from django.db.models import Model, ForeignKey, CASCADE, CharField, BooleanField, DateTimeField
+from django.db.models import (CASCADE, BooleanField, CharField, DateTimeField,
+                              ForeignKey, Model)
 
 from users.models import User
 
