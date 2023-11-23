@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     # my apps
     'users',
     'chats',
+    'shared',
 ]
 
 MIDDLEWARE = [

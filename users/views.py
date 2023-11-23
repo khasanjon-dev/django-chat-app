@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
+from shared.decorators import anonymous_required
 from users.forms import LoginForm, RegisterForm
 
 
@@ -22,6 +23,7 @@ def login_view(request):
     return render(request, 'users/login.html')
 
 
+@anonymous_required('/')
 def register_view(request):
     context = {}
     if request.method == 'POST':

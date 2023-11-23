@@ -18,7 +18,7 @@
                     {% endfor %}
                 {% endif %}
                 <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">or</span> <span><a
-                        href="">Create an account</a></span></div>
+                        href="{% url 'register' %}">Create an account</a></span></div>
             </div>
             <form action="{% url 'login' %}" method="post">
                 {% csrf_token %}

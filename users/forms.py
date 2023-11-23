@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
-from django.forms import Form, ModelForm
+from django.forms import Form, ModelForm, CharField
 from django.shortcuts import get_object_or_404
 
 from users.models import User
@@ -18,13 +18,15 @@ class LoginForm(Form):
 
 
 class RegisterForm(ModelForm):
+    confirm_password = CharField()
+
     class Meta:
         model = User
         fields = ('first_name', 'email', 'username', 'password')
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if email and self._meta.objects.filter(email__iexact=email).exists():
+        if email and User.objects.filter(email=email).exists():
             self._update_errors(
                 ValidationError(
                     {
@@ -38,7 +40,7 @@ class RegisterForm(ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if username and self._meta.objects.filter(username__ixact=username).exists():
+        if username and User.objects.filter(username=username).exists():
             self._update_errors(
                 ValidationError(
                     {
@@ -57,3 +59,4 @@ class RegisterForm(ModelForm):
             message = 'Password do not match'
             raise ValidationError(message)
         return make_password(password)
+PasswordInput

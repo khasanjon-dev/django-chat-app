@@ -7,25 +7,42 @@
     <div class="card">
         <div class="card-body p-4 p-sm-5">
             <div class="row flex-between-center mb-2">
+
+                {% if errors %}
+
+                    <div class="alert alert-danger">
+
+                        {% for error in errors %}
+                            {{ error }}
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
                 <div class="col-auto">
                     <h5>Register</h5>
                 </div>
                 <div class="col-auto fs--1 text-600"><span class="mb-0 undefined">Have an account?</span> <span><a
                         href="{% url 'login' %}">Login</a></span></div>
             </div>
-            <form>
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
                 <div class="mb-3">
-                    <input class="form-control" type="text" autocomplete="on" placeholder="Name"/>
+                    <input class="form-control" type="text" placeholder="First Name" name="first_name"/>
                 </div>
                 <div class="mb-3">
-                    <input class="form-control" type="email" autocomplete="on" placeholder="Email address"/>
+                    <input class="form-control" type="email" placeholder="Email address" name="email"/>
+                </div>
+                <div class="mb-3">
+                    <input class="form-control" type="text" placeholder="Username" name="username"/>
                 </div>
                 <div class="row gx-2">
                     <div class="mb-3 col-sm-6">
-                        <input class="form-control" type="password" autocomplete="on" placeholder="Password"/>
+                        <input class="form-control" type="password" placeholder="Password" name="password"/>
                     </div>
                     <div class="mb-3 col-sm-6">
-                        <input class="form-control" type="password" autocomplete="on" placeholder="Confirm Password"/>
+                        <input class="form-control" type="password" placeholder="Confirm Password" name="confirm_password"/>
                     </div>
                 </div>
                 <div class="form-check">
